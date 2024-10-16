@@ -1,4 +1,4 @@
-import BalancingCircles from "./components/BalancingCircles";
+import BalancingCircles from "./components/balancingCircles/BalancingCircles";
 import "./App.css";
 
 function App() {
