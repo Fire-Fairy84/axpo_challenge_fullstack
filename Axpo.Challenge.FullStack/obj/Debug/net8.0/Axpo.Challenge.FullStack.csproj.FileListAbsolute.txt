@@ -71,3 +71,4 @@ C:\Users\esthe\Desktop\Axpo.Challenge.FullStack\axpo.challenge.fullstack\obj\Deb
 C:\Users\esthe\Desktop\Axpo.Challenge.FullStack\axpo.challenge.fullstack\obj\Debug\net8.0\Axpo.Challenge.FullStack.pdb
 C:\Users\esthe\Desktop\Axpo.Challenge.FullStack\axpo.challenge.fullstack\obj\Debug\net8.0\Axpo.Challenge.FullStack.genruntimeconfig.cache
 C:\Users\esthe\Desktop\Axpo.Challenge.FullStack\axpo.challenge.fullstack\obj\Debug\net8.0\ref\Axpo.Challenge.FullStack.dll
+C:\Users\esthe\Desktop\Axpo.Challenge.FullStack\Axpo.Challenge.FullStack\obj\Debug\net8.0\Axpo.Challenge.FullStack.sourcelink.json
