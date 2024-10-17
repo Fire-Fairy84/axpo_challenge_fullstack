@@ -1,0 +1,23 @@
+.member-drilldown-container {
+  text-align: center;
+  padding: 20px;
+  color: #ffffff;
+}
+
+h2 {
+  margin-bottom: 20px;
+}
+
+.chart-container {
+  margin: 0 auto;
+  width: 80%;
+  max-width: 800px;
+  background-color: #2b2b2b;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+p {
+  color: #ffffff;
+}
