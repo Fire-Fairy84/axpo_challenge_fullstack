@@ -1,49 +1,31 @@
 import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { getMemberForecast } from "../../apiService";
-import {
-  VictoryChart,
-  VictoryLine,
-  VictoryAxis,
-  VictoryTooltip,
-} from "victory";
+import { VictoryChart, VictoryBar, VictoryAxis, VictoryTooltip } from "victory";
 import "./CircleImbalanceData.css";
 
 async function calculateDayAheadImbalance(circle) {
-  const inflows = [];
-  const outflows = [];
   const imbalances = [];
 
   for (const member of circle.members) {
     const memberData = await getMemberForecast(member.id);
-    const data = member.type === "Consumer" ? outflows : inflows;
+    const isConsumer = member.type === "Consumer";
 
-    for (const forecast of memberData.forecast) {
-      const hourlyForecast = data.find((e) => e.date === forecast.date);
-      if (hourlyForecast) {
-        hourlyForecast.value += forecast.value;
-      } else {
-        data.push(forecast);
+    memberData.forecast.forEach((forecast) => {
+      let imbalance = imbalances.find((e) => e.date === forecast.date);
+      if (!imbalance) {
+        imbalance = { date: forecast.date, value: 0 };
+        imbalances.push(imbalance);
       }
-    }
+
+      if (isConsumer) {
+        imbalance.value -= forecast.value;
+      } else {
+        imbalance.value += forecast.value;
+      }
+    });
   }
 
-  for (const inflow of inflows) {
-    const hourlyInflow = imbalances.find((e) => e.date === inflow.date);
-    if (hourlyInflow) {
-      hourlyInflow.value += inflow.value;
-    } else {
-      imbalances.push(inflow);
-    }
-  }
-  for (const outflow of outflows) {
-    const hourlyOutflow = imbalances.find((e) => e.date === outflow.date);
-    if (hourlyOutflow) {
-      hourlyOutflow.value -= outflow.value;
-    } else {
-      imbalances.push(outflow);
-    }
-  }
   return imbalances;
 }
 
@@ -74,7 +56,14 @@ const CircleImbalanceData = ({ circle }) => {
         <p>Loading member data...</p>
       ) : dayAheadImbalance.length > 0 ? (
         <div className="chart-container">
-          <VictoryChart height={600} width={1200}>
+          <VictoryChart
+            height={2800}
+            width={8000}
+            padding={{ top: 50, bottom: 80, left: 200, right: 200 }}
+            style={{
+              parent: { backgroundColor: "#f5f5f5" },
+            }}
+          >
             <VictoryAxis
               label="Date"
               style={{
@@ -92,15 +81,21 @@ const CircleImbalanceData = ({ circle }) => {
                 axisLabel: { fill: "#ffffff", padding: 40 },
               }}
             />
-            <VictoryLine
+            <VictoryBar
               data={dayAheadImbalance}
               x="date"
               y="value"
-              labels={({ datum }) => datum.date}
+              labels={({ datum }) => `Imbalance: ${datum.value}`}
+              barWidth={54}
               style={{
-                data: { stroke: "#82ca9d" },
+                data: { fill: "#82ca9d" },
               }}
-              labelComponent={<VictoryTooltip />}
+              labelComponent={
+                <VictoryTooltip
+                  flyoutStyle={{ stroke: "#333", fill: "#f5f5f5" }}
+                  style={{ fontSize: 120, fill: "#333" }}
+                />
+              }
             />
           </VictoryChart>
         </div>
