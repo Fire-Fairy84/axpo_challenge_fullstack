@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { getBalancingCircles } from "../../apiService";
 import CircleImbalanceData from "../circleImbalanceData/CircleImbalanceData";
+import "./BalancingCircles.css";
 
 const BalancingCircles = () => {
   const [circles, setCircles] = useState([]);
@@ -20,11 +21,15 @@ const BalancingCircles = () => {
   };
 
   return (
-    <div>
-      <h1>Balancing Circles</h1>
-      <ul>
+    <div className="balancing-circles-container">
+      <h1 className="title">Balancing Circles</h1>
+      <ul className="circles-list">
         {circles.map((circle) => (
-          <li key={circle.id} onClick={() => handleCircleClick(circle)}>
+          <li
+            key={circle.id}
+            className="circle-item"
+            onClick={() => handleCircleClick(circle)}
+          >
             {circle.name}
           </li>
         ))}
